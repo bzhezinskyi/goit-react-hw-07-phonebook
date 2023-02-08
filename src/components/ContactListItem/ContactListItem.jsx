@@ -1,7 +1,7 @@
 import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContacts } from 'redux/contactsSlice';
+import { deleteContacts } from 'redux/contacts/contacts.slice';
 
 export default function ContactListItem({ contact: { name, number, id } }) {
   const dispatch = useDispatch();

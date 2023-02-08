@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { queryFilterValue } from 'redux/filterSlise';
-import { getFilter } from 'redux/selectors';
+import { getFilter } from 'redux/filter/filter.selector';
+import { queryFilterValue } from 'redux/filter/filter.slise';
 
 export default function Filter() {
   const filterValue = useSelector(getFilter);

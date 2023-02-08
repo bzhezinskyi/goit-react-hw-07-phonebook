@@ -3,8 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Notiflix from 'notiflix';
 
-import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contacts/contacts.slice';
+import { getContacts } from 'redux/contacts/contacts.selector';
+import {
+  Button,
+  Col,
+  Container,
+  FloatingLabel,
+  Form,
+  Row,
+} from 'react-bootstrap';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -24,7 +32,6 @@ export default function ContactForm() {
       const message = ' is already in contacts';
       Notiflix.Notify.failure(name + message);
     }
-
     setName('');
     setNumber('');
   };
@@ -43,40 +50,42 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit}>
-        <div className=" mb-4  row text-start">
-          <label className="form-label  col">
-            <span className=" ms-2">Name</span>
-            <input
-              className="form-control"
-              onChange={handleChange}
-              type="text"
-              name="name"
-              value={name}
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-            />
-          </label>
-          <label className="form-label col">
-            <span className=" ms-2">Number</span>
-            <input
-              className="form-control"
-              onChange={handleChange}
-              value={number}
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-            />
-          </label>
-        </div>
-        <button type="submit" className="btn btn-primary">
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <Row className="g-2 mb-2">
+          <Col md>
+            <FloatingLabel controlId="floatingInputGrid" label="Nanme">
+              <Form.Control
+                onChange={handleChange}
+                type="text"
+                name="name"
+                value={name}
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                required
+                placeholder="Enter name"
+              />
+            </FloatingLabel>
+          </Col>
+          <Col md>
+            <FloatingLabel controlId="floatingInputGrid" label="Number">
+              <Form.Control
+                onChange={handleChange}
+                value={number}
+                type="tel"
+                name="number"
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                required
+                placeholder="Enter number"
+              />
+            </FloatingLabel>
+          </Col>
+        </Row>
+        <Button variant="primary" type="submit">
           Add contact
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Form>
+    </Container>
   );
 }
