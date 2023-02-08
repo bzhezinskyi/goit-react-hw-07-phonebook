@@ -1,3 +1,4 @@
+import { Container, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilter } from 'redux/filter/filter.selector';
 import { queryFilterValue } from 'redux/filter/filter.slise';
@@ -11,15 +12,16 @@ export default function Filter() {
   };
 
   return (
-    <div className="container mb-3 text-start">
-      <span className=" ms-2">Find contacts by name</span>
-      <input
-        className="form-control"
-        type="text"
-        value={filterValue}
-        aria-label="readonly input example"
-        onChange={hendleChangeFiltr}
-      />
-    </div>
+    <Container>
+      <Form.Group className="mb-3 text-start">
+        <Form.Label className="ms-3">Find contacts by name</Form.Label>
+        <Form.Control
+          type="text"
+          value={filterValue}
+          aria-label="readonly input example"
+          onChange={hendleChangeFiltr}
+        />
+      </Form.Group>
+    </Container>
   );
 }
