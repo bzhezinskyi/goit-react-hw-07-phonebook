@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { deleteContacts } from 'redux/contacts/contacts.slice';
 
@@ -7,28 +8,26 @@ export default function ContactListItem({ contact: { name, number, id } }) {
   const dispatch = useDispatch();
 
   return (
-    <li className="list-group-item">
-      <div className="row align-items-center">
-        <div className="col">
-          <h5 className="mb-0">{name}:</h5>
-        </div>
-        <div className="col">
-          <p className="mb-0">{number}</p>
-        </div>
-        <div className="col-auto ">
-          <button
-            className="btn btn-primary "
-            type="button"
-            onClick={() => {
-              dispatch(deleteContacts(id));
-              Notiflix.Notify.success('Deleted from contacts');
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    </li>
+    <tr>
+      <td>
+        <b className="mb-0">{name}:</b>
+      </td>
+      <td>
+        <p className="mb-0">{number}</p>
+      </td>
+      <td>
+        <Button
+          variant="primary"
+          type="button"
+          onClick={() => {
+            dispatch(deleteContacts(id));
+            Notiflix.Notify.success('Deleted from contacts');
+          }}
+        >
+          Delete
+        </Button>
+      </td>
+    </tr>
   );
 }
 
