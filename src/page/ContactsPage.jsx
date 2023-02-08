@@ -2,16 +2,18 @@ import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
 
+import { Container } from 'react-bootstrap';
+
 const ContactsPage = () => {
   return (
-    <div className="container text-center">
+    <Container className="text-center">
       <h1>Phonebook</h1>
       <ContactForm />
       <hr />
-      <h2 className="mb-4">Contacts</h2>
+      <h2>Contacts</h2>
       <Filter />
       <ContactList />
-    </div>
+    </Container>
   );
 };
 export default ContactsPage;

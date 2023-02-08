@@ -19,9 +19,9 @@ export default function ContactList() {
       <Table striped>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Number</th>
-            <th></th>
+            <th className="text-start">Name</th>
+            <th className="text-start">Number</th>
+            <th className="text-end"></th>
           </tr>
         </thead>
         <tbody>

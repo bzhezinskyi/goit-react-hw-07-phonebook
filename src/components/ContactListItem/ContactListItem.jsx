@@ -9,13 +9,13 @@ export default function ContactListItem({ contact: { name, number, id } }) {
 
   return (
     <tr>
-      <td>
+      <td className="text-start">
         <b className="mb-0">{name}:</b>
       </td>
-      <td>
+      <td className="text-start">
         <p className="mb-0">{number}</p>
       </td>
-      <td>
+      <td className="text-end">
         <Button
           variant="primary"
           type="button"
