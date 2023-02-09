@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+
+import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+
 import { deleteContact } from 'redux/contacts/contacts.operations';
-// import { toast } from 'react-toastify';
 
 export default function ContactListItem({ name, phone, id }) {
   const [deleting, setDeleting] = useState(false);
@@ -12,8 +14,12 @@ export default function ContactListItem({ name, phone, id }) {
 
   const handleClick = () => {
     setDeleting(true);
-    dispatch(deleteContact(id));
-    // toast.success('Deleted from contacts');
+
+    toast.promise(dispatch(deleteContact(id)), {
+      pending: `Deleting ${name}`,
+      success: `Delete ${name}`,
+      error: `${name} not deleted`,
+    });
   };
 
   return (

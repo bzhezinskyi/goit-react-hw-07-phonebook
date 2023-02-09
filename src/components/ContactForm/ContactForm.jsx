@@ -1,11 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
-
 import { useState } from 'react';
 
-import { selectContacts } from 'redux/contacts/contacts.selector';
+import { toast } from 'react-toastify';
 import {
   Button,
   Col,
@@ -14,6 +10,8 @@ import {
   Form,
   Row,
 } from 'react-bootstrap';
+
+import { selectContacts } from 'redux/contacts/contacts.selector';
 import { addContact } from 'redux/contacts/contacts.operations';
 
 export default function ContactForm() {
@@ -27,9 +25,11 @@ export default function ContactForm() {
     event.preventDefault();
 
     if (!contacts.find(contact => contact.name.includes(name))) {
-      dispatch(addContact({ name, phone: number }));
-
-      // Notiflix.Notify.success(name + ' added in contacts');
+      toast.promise(dispatch(addContact({ name, phone: number })), {
+        pending: `Create a new contact ${name}`,
+        success: `New contact ${name}`,
+        error: `${name} not create`,
+      });
     } else {
       const message = ' is already in contacts';
       toast.warn(name + message);
@@ -84,7 +84,11 @@ export default function ContactForm() {
             </FloatingLabel>
           </Col>
         </Row>
-        <Button variant="primary" type="submit">
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={contacts.length === 100}
+        >
           Add contact
         </Button>
       </Form>

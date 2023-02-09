@@ -1,15 +1,16 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Container, Table } from 'react-bootstrap';
+
 import ContactListItem from 'components/ContactListItem/ContactListItem';
+import { fetchContacts } from 'redux/contacts/contacts.operations';
 import {
   selectContacts,
   selectError,
   selectIsLoading,
   selectVisibleContacts,
 } from 'redux/contacts/contacts.selector';
-import { Container, Table } from 'react-bootstrap';
-import { useEffect } from 'react';
-import { fetchContacts } from 'redux/contacts/contacts.operations';
 
 export default function ContactList() {
   const dispatch = useDispatch();
