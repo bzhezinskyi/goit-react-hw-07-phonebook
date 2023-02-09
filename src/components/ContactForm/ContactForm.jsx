@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useState } from 'react';
-import Notiflix from 'notiflix';
 
-import { addContact } from 'redux/contacts/contacts.slice';
-import { getContacts } from 'redux/contacts/contacts.selector';
+import { selectContacts } from 'redux/contacts/contacts.selector';
 import {
   Button,
   Col,
@@ -13,24 +14,25 @@ import {
   Form,
   Row,
 } from 'react-bootstrap';
+import { addContact } from 'redux/contacts/contacts.operations';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
 
   const handleSubmit = event => {
     event.preventDefault();
 
     if (!contacts.find(contact => contact.name.includes(name))) {
-      dispatch(addContact({ name: name, number: number }));
+      dispatch(addContact({ name, phone: number }));
 
-      Notiflix.Notify.success(name + ' added in contacts');
+      // Notiflix.Notify.success(name + ' added in contacts');
     } else {
       const message = ' is already in contacts';
-      Notiflix.Notify.failure(name + message);
+      toast.warn(name + message);
     }
     setName('');
     setNumber('');

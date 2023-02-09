@@ -1,10 +1,10 @@
 import { Container, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilter } from 'redux/filter/filter.selector';
+import { selectFilter } from 'redux/filter/filter.selector';
 import { queryFilterValue } from 'redux/filter/filter.slise';
 
 export default function Filter() {
-  const filterValue = useSelector(getFilter);
+  const filterValue = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const hendleChangeFiltr = event => {

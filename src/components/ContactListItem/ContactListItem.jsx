@@ -1,11 +1,20 @@
-import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { deleteContacts } from 'redux/contacts/contacts.slice';
+import { deleteContact } from 'redux/contacts/contacts.operations';
+// import { toast } from 'react-toastify';
 
-export default function ContactListItem({ contact: { name, number, id } }) {
+export default function ContactListItem({ name, phone, id }) {
+  const [deleting, setDeleting] = useState(false);
+
   const dispatch = useDispatch();
+
+  const handleClick = () => {
+    setDeleting(true);
+    dispatch(deleteContact(id));
+    // toast.success('Deleted from contacts');
+  };
 
   return (
     <tr>
@@ -13,18 +22,16 @@ export default function ContactListItem({ contact: { name, number, id } }) {
         <b className="mb-0">{name}:</b>
       </td>
       <td className="text-start">
-        <p className="mb-0">{number}</p>
+        <p className="mb-0">{phone}</p>
       </td>
       <td className="text-end">
         <Button
           variant="primary"
           type="button"
-          onClick={() => {
-            dispatch(deleteContacts(id));
-            Notiflix.Notify.success('Deleted from contacts');
-          }}
+          onClick={handleClick}
+          disabled={deleting}
         >
-          Delete
+          {deleting ? 'Delete...' : 'Delete'}
         </Button>
       </td>
     </tr>
@@ -32,9 +39,7 @@ export default function ContactListItem({ contact: { name, number, id } }) {
 }
 
 ContactListItem.propTypes = {
-  contact: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-  }).isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
 };

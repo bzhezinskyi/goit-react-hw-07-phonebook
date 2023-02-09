@@ -1,35 +1,48 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ContactListItem from 'components/ContactListItem/ContactListItem';
-import { getContacts } from 'redux/contacts/contacts.selector';
-import { getFilter } from 'redux/filter/filter.selector';
+import {
+  selectContacts,
+  selectError,
+  selectIsLoading,
+  selectVisibleContacts,
+} from 'redux/contacts/contacts.selector';
 import { Container, Table } from 'react-bootstrap';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contacts/contacts.operations';
 
 export default function ContactList() {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const visibleContacts = useSelector(selectVisibleContacts);
 
-  const normalizeFilter = filter.toLowerCase();
-  const visibleContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizeFilter)
-  );
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <Container>
-      <Table striped>
-        <thead>
-          <tr>
-            <th className="text-start">Name</th>
-            <th className="text-start">Number</th>
-            <th className="text-end"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {visibleContacts.map(contact => (
-            <ContactListItem key={contact.id} contact={contact} />
-          ))}
-        </tbody>
-      </Table>
+      {isLoading && !contacts.length > 0 && <b>Loading tasks...</b>}
+      {error && <b>{error}</b>}
+      {contacts.length > 0 && !error && (
+        <Table striped>
+          <thead>
+            <tr>
+              <th className="text-start">Name</th>
+              <th className="text-start">Number</th>
+              <th className="text-end"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts &&
+              visibleContacts.map(contact => (
+                <ContactListItem key={contact.id} {...contact} />
+              ))}
+          </tbody>
+        </Table>
+      )}
     </Container>
   );
 }
